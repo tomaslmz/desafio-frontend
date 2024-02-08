@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 export default function Header() {
   return (
-    <header className="w-screen border-slate-300 bg-gray-900 border-b p-6 flex justify-between">
+    <header className="w-full border-slate-300 bg-gray-900 border-b p-6 flex justify-between">
       <div>
         <nav>
           <ul className="flex gap-3">
@@ -13,10 +13,10 @@ export default function Header() {
         </nav>
       </div>
       <div className="buttons">
-        <Link to="/login">
+        <Link to="/entrar">
           <Button>Entrar</Button>
         </Link>
-        <Link to="/">
+        <Link to="/registrar">
           <Button variant="secondary">Registrar</Button>
         </Link>
       </div>
