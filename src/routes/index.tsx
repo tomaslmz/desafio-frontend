@@ -7,9 +7,11 @@ import {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Register />}>
-      <Route path="/login" element={<Login />} />
-    </Route>
+    <>
+      <Route path="/" element={<h1>Home</h1>} />
+      <Route path="/registrar" element={<Register />} />
+      <Route path="/entrar" element={<Login />} />
+    </>
   )
 )
 
