@@ -45,7 +45,7 @@ export default function Register() {
       toast.success(response.data.message);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch(err: any) {
-      toast.error(err.message);
+      toast.error(err.response.data.message);
     }
   };
 
