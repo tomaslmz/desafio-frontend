@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Toaster, toast } from 'sonner';
 import { z } from 'zod';
 import axios from '@/services/axios';
+import { useNavigate } from 'react-router-dom';
 
 interface IFormInput {
   nome: string,
@@ -21,6 +22,7 @@ const FormSchema = z.object({
 });
 
 export default function Login() {
+	const navigate = useNavigate();
 	const { register, handleSubmit } = useForm<IFormInput>();
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
 		try {
@@ -33,6 +35,7 @@ export default function Login() {
 			});
 
 			toast.success(response.data.message);
+			navigate('/');
 		} catch(err: any) {
 			toast.error(err.response.data.message);
 		}

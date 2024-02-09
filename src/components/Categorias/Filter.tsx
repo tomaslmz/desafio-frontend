@@ -23,7 +23,7 @@ export default function Filter() {
 	};
 
 	return (
-		<form className='flex flex-row gap-5'>
+		<form className='flex flex-row gap-5 flex-wrap'>
 			<Input
 				name='id'
 				placeholder='ID da categoria'
