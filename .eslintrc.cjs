@@ -1,19 +1,54 @@
 module.exports = {
-  root: true,
-  env: { browser: true, es2020: true },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
-  ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
-  rules: {
-    'typescript-eslint/no-explicit-any': 0,
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-  },
-}
+	'env': {
+		'browser': true,
+		'es2021': true,
+		'node': true
+	},
+	'extends': [
+		'eslint:recommended',
+		'plugin:@typescript-eslint/recommended',
+		'plugin:react/recommended'
+	],
+	'overrides': [
+		{
+			'env': {
+				'node': true
+			},
+			'files': [
+				'.eslintrc.{js,cjs}'
+			],
+			'parserOptions': {
+				'sourceType': 'script'
+			}
+		}
+	],
+	'parser': '@typescript-eslint/parser',
+	'parserOptions': {
+		'ecmaVersion': 'latest',
+		'sourceType': 'module'
+	},
+	'plugins': [
+		'@typescript-eslint',
+		'react'
+	],
+	'rules': {
+		'react/react-in-jsx-scope': 0,
+		'@typescript-eslint/no-explicit-any': 0,
+		'indent': [
+			'error',
+			'tab'
+		],
+		'linebreak-style': [
+			'error',
+			'unix'
+		],
+		'quotes': [
+			'error',
+			'single'
+		],
+		'semi': [
+			'error',
+			'always'
+		]
+	}
+};

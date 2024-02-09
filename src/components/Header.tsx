@@ -9,8 +9,8 @@ export default function Header() {
           <div>
           <nav>
             <ul className="flex gap-3">
-              <li><Link to="/categoria"><Button variant={'secondary'}>Categoria</Button></Link></li>
-              <li className="text-white"><Link to="/produto"><Button variant={'secondary'}>Produto</Button></Link></li>
+              <li><Link to="/categorias"><Button variant={'secondary'}>Categorias</Button></Link></li>
+              <li className="text-white"><Link to="/produtos"><Button variant={'secondary'}>Produtos</Button></Link></li>
             </ul>
           </nav>
         </div>

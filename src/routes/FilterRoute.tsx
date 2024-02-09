@@ -6,16 +6,16 @@ interface FilterRouteProps {
 }
 
 export default function FilterRoute({ isClosed = false }: FilterRouteProps) {
-  const location = useLocation();
-  const auth = getCookie('auth');
+	const location = useLocation();
+	const auth = getCookie('auth');
 
-  if (isClosed && !auth) {
-    return <Navigate to="/entrar" state={{ from: location}} replace />
-  }
+	if (isClosed && !auth) {
+		return <Navigate to="/entrar" state={{ from: location}} replace />;
+	}
 
-  if (!isClosed && auth) {
-    return <Navigate to="/" state={{ from: location}} replace />
-  }
+	if (!isClosed && auth) {
+		return <Navigate to="/" state={{ from: location}} replace />;
+	}
 
-  return <Outlet />;
+	return <Outlet />;
 }
