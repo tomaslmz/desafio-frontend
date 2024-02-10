@@ -86,7 +86,7 @@ export default function CreateDialog() {
 		mutationFn: createProduto,
 		async onSuccess() {
 			const produtos = await getProdutos(params);
-			queryClient.setQueryData(['produtos'], produtos);
+			queryClient.setQueryData(['produtos', params.descricao, params.categoria], produtos);
 		},
 	});
 
