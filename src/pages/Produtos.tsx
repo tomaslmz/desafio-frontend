@@ -43,7 +43,7 @@ export default function Produtos() {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{ produtos?.length && produtos.map((produto) => (
+							{ produtos?.length ? produtos.map((produto) => (
 								<TableRow key={produto.id}>
 									<TableCell>{produto.id}</TableCell>
 									<TableCell>{produto.codigo_barras}</TableCell>
@@ -60,7 +60,12 @@ export default function Produtos() {
 									/></TableCell>
 									<TableCell><DeleteDialog id={produto.id} /></TableCell>
 								</TableRow>
-							))}
+							))
+								:
+								<TableRow>
+									<TableCell>Nenhum resultado encontrado!</TableCell>
+								</TableRow>
+							}
 						</TableBody>
 					</Table>
 				</div>

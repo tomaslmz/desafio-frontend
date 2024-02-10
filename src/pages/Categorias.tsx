@@ -39,7 +39,7 @@ export default function Categorias() {
 						</TableHeader>
 						<TableBody>
 							{
-								categorias?.length && (
+								categorias?.length ? (
 									categorias.map((categoria, index) => {
 										return (<TableRow key={index}>
 											<TableCell>{categoria.id}</TableCell>
@@ -49,6 +49,10 @@ export default function Categorias() {
 										</TableRow>);
 									})
 								)
+									:
+									<TableRow>
+										<TableCell>Nenhum resultado encontrado!</TableCell>
+									</TableRow>
 							}
 						</TableBody>
 					</Table>
