@@ -2,18 +2,13 @@ import axios from '@/services/axios';
 import getCookie from '@/utils/getCookie';
 import { toast } from 'sonner';
 
-interface ProdutoRequest {
-	codigo_barras: string;
-	descricao: string;
-	caracteristicas: string;
-	preco: number;
-	unidade_medida: string;
-	categoria_id: number | null;	
+interface DeleteParams {
+	id: number
 }
 
-export default async function createProduto(data: ProdutoRequest) {
+export default async function deleteCategorias({ id }: DeleteParams) {
 	try {
-		const response = await axios.post('/produto/create', data, {
+		const response = await axios.delete(`/categoria/delete/${id}`, {
 			headers: {
 				'Authorization': `Bearer ${getCookie('auth')}`
 			}

@@ -2,18 +2,16 @@ import axios from '@/services/axios';
 import getCookie from '@/utils/getCookie';
 import { toast } from 'sonner';
 
-interface ProdutoRequest {
-	codigo_barras: string;
+interface CategoriaRequest {
+  id: number;
 	descricao: string;
-	caracteristicas: string;
-	preco: number;
-	unidade_medida: string;
-	categoria_id: number | null;	
 }
 
-export default async function createProduto(data: ProdutoRequest) {
+export default async function updateCategorias(data: CategoriaRequest) {
 	try {
-		const response = await axios.post('/produto/create', data, {
+		const response = await axios.patch(`/categoria/update/${data.id}`, {
+			descricao: data.descricao,
+		}, {
 			headers: {
 				'Authorization': `Bearer ${getCookie('auth')}`
 			}
