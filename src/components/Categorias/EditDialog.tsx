@@ -9,21 +9,66 @@ import {
 	DialogClose
 } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
-import { Label } from '@radix-ui/react-label';
 import { Textarea } from '../ui/textarea';
-import { useState } from 'react';
+import {
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '@/components/ui/form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useMutation } from '@tanstack/react-query';
+import getCategorias from '@/data/Categorias/getCategorias';
+import queryClient from '@/query/queryClient';
+import { useSearchParams } from 'react-router-dom';
+import updateCategorias from '@/data/Categorias/updateCategorias';
 
-interface EditDialogProps {
-  onConfirm: (novaDescricao: string) => void;
-  descricao: string;
+interface CategoriaRequest {
+	id: number;
+	descricao: string;
 }
 
-export default function EditDialog({ onConfirm, descricao }: EditDialogProps) {
-	const [novaDescricao, setDescricao] = useState(descricao);
+const schema = z.object({
+	id: z.number(),
+	descricao: z.string().min(3, { message: 'A descrição deve ser maior que 3 caracteres' }).max(100, { message: 'A descrição deve ser menor que 100 caracteres' }),
+});
 
-	function handleInput(e: React.ChangeEvent<HTMLTextAreaElement>) {
-		setDescricao(e.target.value);
-	}
+
+export default function EditDialog({ id, descricao }: CategoriaRequest) {
+	const [searchParams] = useSearchParams();
+
+	const params = {
+		id: searchParams.get('id'),
+		descricao: searchParams.get('descricao'),
+	};
+
+	const form = useForm<z.infer<typeof schema>>({
+		resolver: zodResolver(schema),
+		defaultValues: {
+			id,
+			descricao
+		}
+	});
+
+	const { mutateAsync: updateCategoriaFn } = useMutation({
+		mutationFn: updateCategorias,
+		async onSuccess() {
+			const categorias = await getCategorias(params);
+			queryClient.setQueryData(['categorias', params.id, params.descricao], categorias);
+		}
+	});
+
+	const onSubmit: SubmitHandler<CategoriaRequest> = async (data) => {
+		form.reset();
+
+		await updateCategoriaFn(data);
+	};
+
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
@@ -31,22 +76,37 @@ export default function EditDialog({ onConfirm, descricao }: EditDialogProps) {
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Editar categoria</DialogTitle>
+					<DialogTitle>Criar categoria</DialogTitle>
 					<DialogDescription>
 					</DialogDescription>
-					<div className="w-full p-5">
-						<Label htmlFor="descricao">Descrição</Label>
-						<Textarea value={novaDescricao} onChange={handleInput}></Textarea>
-					</div>
+					<Form {...form}>
+						<form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+							<FormField
+								control={form.control}
+								name="descricao"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Descrição</FormLabel>
+										<FormControl>
+											<Textarea onChange={field.onChange} value={field.value}></Textarea>
+										</FormControl>
+										<FormDescription>
+										</FormDescription>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<div className='mt-5 flex flex-row justify-center align-center gap-3'>
+								<Button type="submit">Editar</Button>
+								<DialogClose asChild>
+									<Button type="button" variant={'outline'}>
+							Cancelar
+									</Button>
+								</DialogClose>
+							</div>
+						</form>
+					</Form>
 					<DialogFooter>
-						<DialogClose asChild>
-							<Button onClick={() => onConfirm(novaDescricao)}>Editar</Button>
-						</DialogClose>
-						<DialogClose asChild>
-							<Button type="button" variant={'outline'}>
-                Cancelar
-							</Button>
-						</DialogClose>
 					</DialogFooter>
 				</DialogHeader>
 			</DialogContent>

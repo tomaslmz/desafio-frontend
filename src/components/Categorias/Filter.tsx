@@ -2,42 +2,36 @@ import { useSearchParams } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Search } from 'lucide-react';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+interface FilterForm {
+	filtroId: string;
+	filtroDescricao: string;
+}
 
 export default function Filter() {
-	const [searchParams] = useSearchParams();
-	const [id, setId] = useState<string>(searchParams.get('id') ?? '');
-	const [descricao, setDescricao] = useState<string>(searchParams.get('descricao') ?? '');
+	const [_, setSearchParams] = useSearchParams();
+	const { register, handleSubmit } = useForm<FilterForm>();
 
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
-
-		switch(name) {
-		case 'id':
-			setId(value);
-			break;
-		case 'descricao':
-			setDescricao(value);
-			break;
-		}
-	};
+	async function onSubmit({ filtroId, filtroDescricao }: FilterForm) {
+		setSearchParams({
+			id: filtroId,
+			descricao: filtroDescricao,
+		});
+	}
 
 	return (
-		<form className='flex flex-row gap-5 flex-wrap'>
+		<form className='flex flex-row gap-5 flex-wrap' onSubmit={handleSubmit(onSubmit)}>
 			<Input
-				name='id'
 				placeholder='ID da categoria'
 				className='w-auto'
 				type='number'
-				value={id}
-				onChange={handleInputChange}
+				{... register('filtroId')}
 			/>
 			<Input
-				name='descricao'
 				placeholder='Descrição da categoria'
 				className='w-auto'
-				value={descricao}
-				onChange={handleInputChange}
+				{... register('filtroDescricao')}
 			/>
 			<Button variant={'link'} type="submit">
 				<Search className='w-4 h-4 mr-2' />

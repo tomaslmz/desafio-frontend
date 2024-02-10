@@ -23,7 +23,6 @@ export default async function getProdutos({descricao, categoria}: filterParams):
 
 		return lista;
 	} catch(err: any) {
-		console.log(err);
 		toast.error('Não foi possível conectar com o banco de dados!');
 		return(null);
 	}

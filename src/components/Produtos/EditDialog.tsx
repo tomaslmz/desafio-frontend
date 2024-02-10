@@ -32,7 +32,7 @@ import { toast } from 'sonner';
 import { Input } from '../ui/input';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
-import getCategorias from '@/data/Categorias/getCategorias';
+import getCategorias from '@/data/Produtos/getCategorias';
 import updateProdutos from '@/data/Produtos/updateProdutos';
 import queryClient from '@/query/queryClient';
 import getProdutos from '@/data/Produtos/getProdutos';
@@ -93,8 +93,6 @@ export default function EditDialog({ id, codigo_barras, descricao, caracteristic
 
 	const onSubmit: SubmitHandler<ProdutoRequest> = async (data) => {
 		try {
-			// data.id = id;
-			console.log(data);
 			await updateProdutosFn(data);
 
 			form.reset();

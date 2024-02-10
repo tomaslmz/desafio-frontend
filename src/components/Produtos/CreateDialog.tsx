@@ -34,7 +34,7 @@ import { Input } from '../ui/input';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
 import createProduto from '@/data/Produtos/createProduto';
-import getCategorias from '@/data/Categorias/getCategorias';
+import getCategorias from '@/data/Produtos/getCategorias';
 import getProdutos from '@/data/Produtos/getProdutos';
 import queryClient from '@/query/queryClient';
 import { useSearchParams } from 'react-router-dom';
@@ -92,9 +92,6 @@ export default function CreateDialog() {
 
 	const onSubmit: SubmitHandler<ProdutoRequest> = async (data) => {
 		try {
-			console.log(data);
-			form.reset();
-
 			await createProductFn({
 				codigo_barras: data.codigo_barras,
 				descricao: data.descricao,
@@ -104,6 +101,7 @@ export default function CreateDialog() {
 				categoria_id: data.categoria_id
 			});
 
+			form.reset();
 		} catch(err: any) {
 			toast.error(err.response.data.message);
 		}
