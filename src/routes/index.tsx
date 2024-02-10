@@ -3,6 +3,7 @@ import Register from '@/pages/Register';
 import FilterRoute from './FilterRoute';
 import Header from '@/components/Header';
 import Categorias from '@/pages/Categorias';
+import Produtos from '@/pages/Produtos';
 
 import { 
 	createBrowserRouter, Route, createRoutesFromElements 
@@ -22,6 +23,9 @@ const router = createBrowserRouter(
 			</Route>
 			<Route path="/categorias" element={<FilterRoute isClosed />}>
 				<Route path="/categorias" element={<Categorias />} />
+			</Route>
+			<Route path="/produtos" element={<FilterRoute isClosed />}>
+				<Route path="/produtos" element={<Produtos />} />
 			</Route>
 		</>
 	)
