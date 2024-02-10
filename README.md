@@ -1,4 +1,4 @@
-# DESAFIO BYTECOM FRONTEND
+# DESAFIO FRONTEND
 
 ## Tecnologias utilizadas
 <div align="center">
